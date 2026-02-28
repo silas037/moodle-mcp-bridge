@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 Secure Dockerized Moodle-to-MCP Bridge
 
 A high-performance, local-first **Model Context Protocol (MCP)** server that provides AI-ready access to Moodle LMS data while maintaining strict enterprise security standards.
@@ -21,3 +22,32 @@ Create a restricted user in your Moodle database:
 CREATE USER 'moodle_ai_reader'@'localhost' IDENTIFIED BY 'YourSecurePassword';
 GRANT SELECT ON moodle.* TO 'moodle_ai_reader'@'localhost';
 FLUSH PRIVILEGES;
+=======
+# 🎓 Moodle-to-MCP Secure Bridge
+**Enterprise-Grade Agentic AI Infrastructure for Education**
+
+This project provides a secure, Dockerized **Model Context Protocol (MCP)** server that bridges Claude AI to a private Moodle LMS database. It enables AI agents to perform administrative tasks and student analytics while maintaining 100% data privacy.
+
+## 🛡️ Key Features
+- **Zero-Knowledge Privacy:** Built-in **PII Scrubber** layer that redacts student names/emails locally before data reaches the cloud.
+- **Agentic Analytics:** Proactive tools for identifying at-risk students and monitoring platform engagement.
+- **Secure Architecture:** Uses **SSH Tunneling** and restricted **Read-Only SQL** permissions to protect the core LMS.
+- **Containerized Deployment:** Fully Dockerized for portable, isolated, and conflict-free installation.
+
+## 🛠️ Tech Stack
+- **Protocol:** Model Context Protocol (MCP)
+- **Language:** Python 3.11 (FastMCP)
+- **Containerization:** Docker
+- **Database:** MySQL / MariaDB (Moodle Core)
+- **Infrastructure:** VMWare & macOS Orchestration
+
+## 🚀 Available Tools
+1. `list_courses`: Summarizes all active courses in the database.
+2. `list_students_safe`: Fetches student lists with automated identity redaction.
+3. `get_recent_active_users`: Tracks platform-wide engagement and recent login activity.
+
+## 📦 Getting Started
+### 1. Build the Container
+```bash
+docker build -t moodle-mcp-bridge .
+>>>>>>> b976085 (chore: prepare for sync)

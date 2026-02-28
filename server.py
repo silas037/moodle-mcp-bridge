@@ -86,3 +86,42 @@ def get_at_risk_students(days_inactive: int = 7) -> str:
         return f"Error: {str(e)}"
     finally:
         if 'db' in locals(): db.close()
+
+# Add this tool to your existing server.py
+@mcp.tool()
+def get_recent_active_users(limit: int = 10) -> str:
+    """Retrieves the last X recently active users across the entire Moodle platform."""
+    try:
+        db = mysql.connector.connect(
+            host="host.docker.internal", 
+            user="moodle_ai_reader", 
+            password="Njibhu@123", 
+            database="learn"
+        )
+        cursor = db.cursor(dictionary=True)
+        
+        # Query to find users with the most recent 'lastaccess' timestamp
+        query = """
+            SELECT id, lastaccess 
+            FROM mdl_user 
+            WHERE lastaccess > 0 
+            ORDER BY lastaccess DESC 
+            LIMIT %s
+        """
+        cursor.execute(query, (limit,))
+        rows = cursor.fetchall()
+        
+        if not rows:
+            return "No recent user activity found in the database."
+            
+        # Apply the Privacy Scrubber (Redacting real names)
+        import time
+        results = [f"User_ID_{r['id']} - Last Active: {time.ctime(r['lastaccess'])}" for r in rows]
+        
+        return f"Last {len(results)} recently active users (Redacted):\n" + "\n".join(results)
+        
+    except Exception as e:
+        return f"Database Error: {str(e)}"
+    finally:
+        if 'db' in locals() and db.is_connected():
+            db.close()
